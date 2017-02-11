@@ -1,0 +1,59 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/util  http://www.springframework.org/schema/util/spring-util-3.1.xsd">
+
+    <!-- Note
+        current row columns are referred in Upper case only i.e A,B,AA,AD etc,
+        previous row columns are referred in lower case only i.e a,b,aa,ad etc -->
+
+    <!-- While naming columns make sure it is out of range of actual readings columns -->
+
+    <util:map id="customColumns">
+        <entry key="TR" value="(D*65536+E)/10" /> <!-- Totaliser Reading -->
+        <entry key="KWH" value="AG/1000" /><!--KWH Reading -->
+    </util:map>
+
+    <util:map id="aggregateCustomColumns">
+        <entry key="DTR" value="TR-tr" /><!-- Diff In Totaliser is diff between current and prev TR-->
+        <entry key="DKWH" value="KWH-kwh" /><!--KWH diff-->
+    </util:map>
+
+    <!--instrument id to custom column list-->
+    <util:map id="applicableCustomColumns">
+        <entry key="1" value-ref="airFlowCustomColumns" />
+        <entry key="2" value-ref="energyMeterCustomColumns" />
+    </util:map>
+
+    <util:list id="airFlowCustomColumns">
+        <value>TR</value>
+        <value>DTR</value>
+    </util:list>
+
+    <util:list id="energyMeterCustomColumns">
+        <value>KWH</value>
+        <value>DKWH</value>
+    </util:list>
+
+
+    <!-- Chart -->
+
+    <util:map id="dataSet">
+        <entry key="1" value-ref="airFlowSeries" />
+        <entry key="2" value-ref="energyMeterSeries" />
+    </util:map>
+
+    <bean id="airFlowSeries" class="com.saven.batch.chart.Series">
+        <property name="name" value="Airflow Meter"/>
+        <property name="x" value="A"/>
+        <property name="y" value="DTR"/>
+    </bean>
+
+    <bean id="energyMeterSeries" class="com.saven.batch.chart.Series">
+        <property name="name" value="Energy Meter"/>
+        <property name="x" value="A"/>
+        <property name="y" value="DKWH"/>
+    </bean>
+
+</beans>

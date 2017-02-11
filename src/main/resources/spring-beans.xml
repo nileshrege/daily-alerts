@@ -1,0 +1,49 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/util  http://www.springframework.org/schema/util/spring-util-3.1.xsd">
+
+    <import resource="batch-job.xml"/>
+    <import resource="custom-columns.xml"/>
+
+    <bean id="flatFileItemReader" class="org.springframework.batch.item.file.FlatFileItemReader">
+        <property name="lineMapper" ref="csvFileLineMapper"/>
+    </bean>
+
+    <bean id ="csvFileLineMapper" class="com.saven.batch.mapper.CSVFileLineMapper">
+        <property name="lineTokenizer"><bean class="org.springframework.batch.item.file.transform.DelimitedLineTokenizer"/></property>
+        <property name="fieldSetMapper" ref="csvFileColumnMapper"/>
+    </bean>
+
+    <!--<bean id = "csvFileColumnMapper" class="com.saven.batch.mapper.StandardFieldsColumnMapper" >-->
+        <!--<property name="identifier" value="B"/>-->
+        <!--<property name="defaultDataType" value="java.lang.Double"/>-->
+        <!--<property name="indexDataType">-->
+            <!--<map>-->
+                <!--<entry key="0" value="java.time.Instant" />-->
+                <!--<entry key="1" value="java.lang.Integer" />-->
+            <!--</map>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+    <bean id = "csvFileColumnMapper" class="com.saven.batch.mapper.DerivedFieldsColumnMapper" >
+        <property name="identifier" value="B"/>
+        <property name="defaultDataType" value="java.lang.Double"/>
+        <property name="indexDataType">
+            <map>
+                <entry key="0" value="java.time.Instant" />
+                <entry key="1" value="java.lang.Integer" />
+            </map>
+        </property>
+        <property name="customColumnDecorator" ref="multiRowCustomColumnDecorator"/>
+    </bean>
+
+    <bean id="multiRowCustomColumnDecorator" class="com.saven.batch.decorator.MultiRowCustomColumnDecorator">
+        <property name="customColumns" ref="customColumns"/>
+        <property name="aggregateCustomColumns" ref="aggregateCustomColumns"/>
+        <property name="applicableCustomColumns" ref="applicableCustomColumns"/>
+    </bean>
+
+</beans>

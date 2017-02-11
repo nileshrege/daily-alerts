@@ -1,0 +1,60 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/util  http://www.springframework.org/schema/util/spring-util-3.1.xsd">
+
+    <job id="dailyAlertJob"
+         xmlns="http://www.springframework.org/schema/batch">
+        <step id="readFile">
+            <tasklet>
+                <chunk commit-interval="200"
+                    reader="reader"
+                    writer="writer"
+                    processor="processor"
+                />
+                <listeners>
+                    <listener ref="csvFileLineMapper"/>
+                    <listener ref="csvFileLineMapper"/>
+                    <listener ref="awsUploader"/>
+                </listeners>
+            </tasklet>
+        </step>
+    </job>
+
+    <bean id="awsUploader" class="com.saven.batch.AWSUploader">
+        <property name="folderName" value="src/test/resources/output"/>
+        <property name="accessKey" value="AKIAIJY5DIJ75PRFQNWA"/>
+        <property name="secretKey" value="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"/>
+        <property name="bucketName" value="Elbin"/>
+        <property name="key" value="LineChart"/>
+        <property name="upload" value="true"/>
+    </bean>
+
+    <bean id="reader" class="org.springframework.batch.item.file.MultiResourceItemReader">
+        <property name="resources" value="file:src/test/resources/modem/56*.txt" />
+        <property name="delegate" ref="flatFileItemReader" />
+    </bean>
+
+    <bean id="processor" class="com.saven.batch.processor.DataSetProcessor" scope="step">
+        <property name="dataSet" ref="dataSet"/>
+    </bean>
+
+    <bean id="writer" class="com.saven.batch.writer.LineChartWriter">
+        <property name="file" value="src/test/resources/output/LineGraph.jpeg"/>
+    </bean>
+
+    <bean id="transactionManager"
+          class="org.springframework.batch.support.transaction.ResourcelessTransactionManager" />
+
+    <bean id="jobRepository"
+          class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean">
+        <property name="transactionManager" ref="transactionManager" />
+    </bean>
+
+    <bean id="jobLauncher"
+          class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+        <property name="jobRepository" ref="jobRepository" />
+    </bean>
+
+</beans>
