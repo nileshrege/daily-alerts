@@ -7,7 +7,7 @@
          xmlns="http://www.springframework.org/schema/batch">
         <step id="readFile">
             <tasklet>
-                <chunk commit-interval="200"
+                <chunk commit-interval="1440"
                     reader="reader"
                     writer="writer"
                     processor="processor"
@@ -26,7 +26,7 @@
         <property name="accessKey" value="AKIAIJY5DIJ75PRFQNWA"/>
         <property name="secretKey" value="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"/>
         <property name="bucketName" value="Elbin"/>
-        <property name="key" value="LineChart"/>
+        <property name="key" value="Performance@"/>
         <property name="upload" value="true"/>
     </bean>
 

@@ -10,6 +10,8 @@ import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.core.StepExecutionListener;
 
 import java.io.File;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Created by nrege on 1/28/2017.
@@ -40,7 +42,10 @@ public class AWSUploader implements StepExecutionListener {
     }
 
     private void upload() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dMMMyyyy-hh:mma");
 
+        String dateTime = LocalDateTime.now().format(formatter);
+        System.out.println(dateTime);
         File folder = new File(folderName);
         File[] listOfFiles = folder.listFiles();
         if (listOfFiles != null && upload) {
@@ -51,7 +56,7 @@ public class AWSUploader implements StepExecutionListener {
                         try {
                             AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
                             AmazonS3 s3client = new AmazonS3Client(credentials);
-                            s3client.putObject(new PutObjectRequest(bucketName, key, file));
+                            s3client.putObject(new PutObjectRequest(bucketName, key+"-"+dateTime, file));
                         }
                         catch (Exception e) {
                             e.printStackTrace();
