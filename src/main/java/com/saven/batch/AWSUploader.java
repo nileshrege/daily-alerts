@@ -47,7 +47,6 @@ public class AWSUploader implements StepExecutionListener {
             for (int i = 0; i < listOfFiles.length; i++) {
                 if (listOfFiles[i].isFile()) {
                     File file = listOfFiles[i];
-                    System.out.println("File " + listOfFiles[i].getName());
                     if (file.exists() && !file.isDirectory()) {
                         try {
                             AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);

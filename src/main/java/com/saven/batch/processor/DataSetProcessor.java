@@ -45,7 +45,6 @@ public class DataSetProcessor implements ItemProcessor<Row, XYSeries> , StepExec
         Column yColumn = row.getColumn(series.getY()).get();
 
         xySeries.add(getDoubleValue(xColumn), getDoubleValue(yColumn));
-        System.out.println(" series: "+series.getName()+" X: "+getDoubleValue(xColumn)+ " Y:"+getDoubleValue(yColumn));
 
         return xySeries;
     }

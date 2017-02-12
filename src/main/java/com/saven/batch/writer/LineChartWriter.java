@@ -39,7 +39,6 @@ public class LineChartWriter implements ItemWriter , StepExecutionListener {
 
         for(Map.Entry<String, XYSeries> entry : xySeriesMap.entrySet()){
             XYSeries xySeries = entry.getValue();
-            System.out.println(xySeries.getItemCount());
             dataset.addSeries(xySeries);
         }
 
