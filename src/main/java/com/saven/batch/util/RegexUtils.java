@@ -9,29 +9,21 @@ import java.util.regex.Pattern;
  */
 public class RegexUtils {
 
+    public static boolean matches(String text, String regex) {
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(text);
+        return matcher.matches();
+    }
+
     public static String replaceVarWithVal(String text, String regex, Function<String, String> replacer, String defaultValue) {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(text);
-        StringBuilder builder = new StringBuilder();
-        int i = 0;
         while (matcher.find()) {
-            String replacement = replacer.apply(matcher.group(1).toUpperCase());
-            builder.append(text.substring(i, matcher.start()));
-            if (replacement == null) {
-                if (defaultValue != null) {
-                    builder.append(defaultValue);
-                }
-                else {
-                    builder.append(matcher.group(0));
-                }
-            }
-            else {
-                builder.append(replacement);
-            }
-            i = matcher.end();
+            String group = matcher.group();
+            String replacement = replacer.apply(group);
+            text = text.replace(group, replacement);
         }
-        builder.append(text.substring(i, text.length()));
-        return builder.toString();
+        return text;
     }
 
 }

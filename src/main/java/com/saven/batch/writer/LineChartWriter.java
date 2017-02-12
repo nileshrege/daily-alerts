@@ -15,41 +15,47 @@ import org.jfree.data.general.Dataset;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+import org.springframework.batch.core.ExitStatus;
+import org.springframework.batch.core.StepExecution;
+import org.springframework.batch.core.StepExecutionListener;
+import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.item.ItemWriter;
 
 /**
  * Created by nrege on 1/17/2017.
  */
-public class LineChartWriter implements ItemWriter {
+public class LineChartWriter implements ItemWriter , StepExecutionListener {
+
+    private ExecutionContext executionContext;
+
     String file;
 
     @Override
     public void write(List list) throws Exception {
-        Map<String, XYSeries> xySeriesMap = new HashMap<>();
-        for(Object series : list){
-            XYSeries xySeries = (XYSeries) series;
-            xySeriesMap.put(xySeries.getKey().toString(), xySeries);
-        }
+
+        Map<String, XYSeries> xySeriesMap = (Map<String, XYSeries>) executionContext.get("DATA_SET");
 
         final XYSeriesCollection dataset = new XYSeriesCollection();
+
         for(Map.Entry<String, XYSeries> entry : xySeriesMap.entrySet()){
-            dataset.addSeries(entry.getValue());
+            XYSeries xySeries = entry.getValue();
+            System.out.println(xySeries.getItemCount());
+            dataset.addSeries(xySeries);
         }
 
         final JFreeChart chart = ChartFactory.createXYLineChart(
-                "Line Chart Demo",      // chart title
-                "X",                      // x axis label
-                "Y",                      // y axis label
-                dataset,                  // data
-                PlotOrientation.VERTICAL,
-                true,                     // include legend
-                true,                     // tooltips
-                false                     // urls
+              "Line Chart Demo",
+              "X",
+              "Y",
+               dataset,
+               PlotOrientation.VERTICAL,
+              true,
+              true,
+              false
         );
 
         chart.setBackgroundPaint(Color.white);
 
-        // get a reference to the plot for further customisation...
         final XYPlot plot = chart.getXYPlot();
         plot.setBackgroundPaint(Color.white);
         plot.setDomainGridlinePaint(Color.white);
@@ -62,9 +68,9 @@ public class LineChartWriter implements ItemWriter {
 
         int width = 640; /* Width of the image */
         int height = 480; /* Height of the image */
-        File lineChart = new File( file );
+        File file = new File(this.file);
 
-        ChartUtilities.saveChartAsJPEG(lineChart ,chart, width ,height);
+        ChartUtilities.saveChartAsJPEG(file ,chart, width ,height);
     }
 
     public String getFile() {
@@ -74,4 +80,15 @@ public class LineChartWriter implements ItemWriter {
     public void setFile(String file) {
         this.file = file;
     }
+
+    @Override
+    public void beforeStep(StepExecution stepExecution) {
+        this.executionContext = stepExecution.getExecutionContext();
+    }
+
+    @Override
+    public ExitStatus afterStep(StepExecution stepExecution) {
+        return stepExecution.getExitStatus();
+    }
+
 }

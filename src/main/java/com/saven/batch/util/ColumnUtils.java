@@ -2,6 +2,8 @@ package com.saven.batch.util;
 
 import com.saven.batch.domain.Column;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -21,7 +23,7 @@ public class ColumnUtils {
             return integer;
         } else if(column.getClazz().isAssignableFrom(Double.class)) {
             Double duble = (Double) column.getVal();
-            return duble;
+            return round(duble, 2);
         } else if(column.getClazz().isAssignableFrom(String.class)) {
             String string = (String) column.getVal();
             return Double.valueOf(string);
@@ -30,4 +32,11 @@ public class ColumnUtils {
         }
     }
 
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = new BigDecimal(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
 }

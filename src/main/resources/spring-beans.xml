@@ -1,9 +1,6 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/util  http://www.springframework.org/schema/util/spring-util-3.1.xsd">
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <import resource="batch-job.xml"/>
     <import resource="custom-columns.xml"/>
@@ -17,17 +14,6 @@
         <property name="fieldSetMapper" ref="csvFileColumnMapper"/>
     </bean>
 
-    <!--<bean id = "csvFileColumnMapper" class="com.saven.batch.mapper.StandardFieldsColumnMapper" >-->
-        <!--<property name="identifier" value="B"/>-->
-        <!--<property name="defaultDataType" value="java.lang.Double"/>-->
-        <!--<property name="indexDataType">-->
-            <!--<map>-->
-                <!--<entry key="0" value="java.time.Instant" />-->
-                <!--<entry key="1" value="java.lang.Integer" />-->
-            <!--</map>-->
-        <!--</property>-->
-    <!--</bean>-->
-
     <bean id = "csvFileColumnMapper" class="com.saven.batch.mapper.DerivedFieldsColumnMapper" >
         <property name="identifier" value="B"/>
         <property name="defaultDataType" value="java.lang.Double"/>
@@ -37,12 +23,11 @@
                 <entry key="1" value="java.lang.Integer" />
             </map>
         </property>
-        <property name="customColumnDecorator" ref="multiRowCustomColumnDecorator"/>
+        <property name="customColumnDecorator" ref="derivedFieldsDecorator"/>
     </bean>
 
-    <bean id="multiRowCustomColumnDecorator" class="com.saven.batch.decorator.MultiRowCustomColumnDecorator">
+    <bean id="derivedFieldsDecorator" class="com.saven.batch.decorator.DerivedFieldsDecorator">
         <property name="customColumns" ref="customColumns"/>
-        <property name="aggregateCustomColumns" ref="aggregateCustomColumns"/>
         <property name="applicableCustomColumns" ref="applicableCustomColumns"/>
     </bean>
 

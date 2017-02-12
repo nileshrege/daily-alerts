@@ -46,6 +46,6 @@ public class Row implements Serializable{
     }
 
     public Optional<Column> getColumn(String name) {
-        return columns.stream().filter(c -> c.getName().equals(name)).findFirst();
+        return getColumns().stream().filter(c -> c.getName().equals(name)).findFirst();
     }
 }

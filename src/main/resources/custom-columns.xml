@@ -13,9 +13,6 @@
     <util:map id="customColumns">
         <entry key="TR" value="(D*65536+E)/10" /> <!-- Totaliser Reading -->
         <entry key="KWH" value="AG/1000" /><!--KWH Reading -->
-    </util:map>
-
-    <util:map id="aggregateCustomColumns">
         <entry key="DTR" value="TR-tr" /><!-- Diff In Totaliser is diff between current and prev TR-->
         <entry key="DKWH" value="KWH-kwh" /><!--KWH diff-->
     </util:map>
