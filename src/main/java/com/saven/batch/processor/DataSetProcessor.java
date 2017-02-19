@@ -1,6 +1,5 @@
 package com.saven.batch.processor;
 
-import com.saven.batch.chart.Series;
 import com.saven.batch.domain.Column;
 import com.saven.batch.domain.Row;
 import org.jfree.data.xy.XYSeries;
@@ -13,7 +12,7 @@ import org.springframework.batch.item.ItemProcessor;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.saven.batch.util.ColumnUtils.getDoubleValue;
+import static com.saven.batch.domain.util.ColumnUtils.getDoubleValue;
 
 /**
  * Created by nrege on 1/27/2017.

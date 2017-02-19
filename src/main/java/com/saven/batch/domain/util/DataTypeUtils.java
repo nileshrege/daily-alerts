@@ -1,4 +1,4 @@
-package com.saven.batch.util;
+package com.saven.batch.domain.util;
 
 import java.time.Instant;
 import java.time.LocalDateTime;

@@ -1,6 +1,6 @@
 package com.saven.batch.mapper;
 
-import com.saven.batch.decorator.CustomColumnDecorator;
+import com.saven.batch.domain.CustomColumnDecorator;
 import com.saven.batch.domain.Row;
 import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.item.file.transform.FieldSet;

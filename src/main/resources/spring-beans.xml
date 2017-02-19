@@ -3,7 +3,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <import resource="batch-job.xml"/>
-    <import resource="custom-columns.xml"/>
+    <import resource="excel-columns.xml"/>
+    <import resource="chart-columns.xml"/>
 
     <bean id="flatFileItemReader" class="org.springframework.batch.item.file.FlatFileItemReader">
         <property name="lineMapper" ref="csvFileLineMapper"/>
@@ -24,11 +25,6 @@
             </map>
         </property>
         <property name="customColumnDecorator" ref="derivedFieldsDecorator"/>
-    </bean>
-
-    <bean id="derivedFieldsDecorator" class="com.saven.batch.decorator.DerivedFieldsDecorator">
-        <property name="customColumns" ref="customColumns"/>
-        <property name="applicableCustomColumns" ref="applicableCustomColumns"/>
     </bean>
 
 </beans>

@@ -1,4 +1,4 @@
-package com.saven.batch.decorator;
+package com.saven.batch.domain;
 
 import com.saven.batch.domain.Row;
 

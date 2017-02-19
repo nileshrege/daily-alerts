@@ -1,4 +1,4 @@
-package com.saven.batch.chart;
+package com.saven.batch.processor;
 
 /**
  * Created by nrege on 1/28/2017.

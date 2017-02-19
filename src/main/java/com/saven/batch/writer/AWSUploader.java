@@ -1,4 +1,4 @@
-package com.saven.batch;
+package com.saven.batch.writer;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;

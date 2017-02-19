@@ -1,4 +1,4 @@
-package com.saven.batch.util;
+package com.saven.batch.domain.util;
 
 /**
  * Created by nrege on 1/30/2017.

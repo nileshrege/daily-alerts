@@ -21,7 +21,7 @@
         </step>
     </job>
 
-    <bean id="awsUploader" class="com.saven.batch.AWSUploader">
+    <bean id="awsUploader" class="com.saven.batch.writer.AWSUploader">
         <property name="folderName" value="src/test/resources/output"/>
         <property name="accessKey" value="AKIAIJY5DIJ75PRFQNWA"/>
         <property name="secretKey" value="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"/>

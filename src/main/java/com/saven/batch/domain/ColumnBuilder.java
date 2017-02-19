@@ -1,10 +1,8 @@
-package com.saven.batch.builder;
-
-import com.saven.batch.domain.Column;
+package com.saven.batch.domain;
 
 import java.time.Instant;
 
-import static com.saven.batch.util.DataTypeUtils.*;
+import static com.saven.batch.domain.util.DataTypeUtils.*;
 
 /**
  * Created by nrege on 1/30/2017.

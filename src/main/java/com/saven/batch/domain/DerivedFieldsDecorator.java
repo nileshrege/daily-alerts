@@ -1,9 +1,6 @@
-package com.saven.batch.decorator;
+package com.saven.batch.domain;
 
-import com.saven.batch.builder.ColumnBuilder;
-import com.saven.batch.domain.Column;
-import com.saven.batch.domain.Row;
-import com.saven.batch.util.RegexUtils;
+import com.saven.batch.domain.util.RegexUtils;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 
@@ -14,7 +11,7 @@ import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static com.saven.batch.util.RegexUtils.replaceVarWithVal;
+import static com.saven.batch.domain.util.RegexUtils.replaceVarWithVal;
 
 /**
  * Created by nrege on 1/30/2017.

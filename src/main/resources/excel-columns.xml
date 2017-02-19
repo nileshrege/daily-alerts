@@ -4,6 +4,10 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/util  http://www.springframework.org/schema/util/spring-util-3.1.xsd">
 
+    <bean id="derivedFieldsDecorator" class="com.saven.batch.domain.DerivedFieldsDecorator">
+        <property name="customColumns" ref="customColumns"/>
+        <property name="applicableCustomColumns" ref="applicableCustomColumns"/>
+    </bean>
     <!-- Note
         current row columns are referred in Upper case only i.e A,B,AA,AD etc,
         previous row columns are referred in lower case only i.e a,b,aa,ad etc -->
@@ -32,25 +36,5 @@
         <value>KWH</value>
         <value>DKWH</value>
     </util:list>
-
-
-    <!-- Chart -->
-
-    <util:map id="dataSet">
-        <entry key="1" value-ref="airFlowSeries" />
-        <entry key="2" value-ref="energyMeterSeries" />
-    </util:map>
-
-    <bean id="airFlowSeries" class="com.saven.batch.chart.Series">
-        <property name="name" value="Airflow Meter"/>
-        <property name="x" value="A"/>
-        <property name="y" value="DTR"/>
-    </bean>
-
-    <bean id="energyMeterSeries" class="com.saven.batch.chart.Series">
-        <property name="name" value="Energy Meter"/>
-        <property name="x" value="A"/>
-        <property name="y" value="DKWH"/>
-    </bean>
 
 </beans>
