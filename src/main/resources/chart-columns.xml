@@ -1,0 +1,26 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/util  http://www.springframework.org/schema/util/spring-util-3.1.xsd">
+
+    <!-- Line Chart -->
+
+    <util:map id="dataSet">
+        <entry key="1" value-ref="airFlowSeries" />
+        <entry key="2" value-ref="energyMeterSeries" />
+    </util:map>
+
+    <bean id="airFlowSeries" class="com.saven.batch.processor.Series">
+        <property name="name" value="Airflow Meter"/>
+        <property name="x" value="A"/>
+        <property name="y" value="DTR"/>
+    </bean>
+
+    <bean id="energyMeterSeries" class="com.saven.batch.processor.Series">
+        <property name="name" value="Energy Meter"/>
+        <property name="x" value="A"/>
+        <property name="y" value="DKWH"/>
+    </bean>
+
+</beans>
