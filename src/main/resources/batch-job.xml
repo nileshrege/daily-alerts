@@ -41,6 +41,7 @@
 
     <bean id="writer" class="com.saven.batch.writer.LineChartWriter">
         <property name="file" value="src/test/resources/output/energy-consumption.png"/>
+        <property name="chartName" value="energy-consumption"/>
     </bean>
 
     <bean id="transactionManager"

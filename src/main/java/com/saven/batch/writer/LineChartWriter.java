@@ -30,6 +30,8 @@ public class LineChartWriter implements ItemWriter , StepExecutionListener {
 
     String file;
 
+    String chartName;
+
     @Override
     public void write(List list) throws Exception {
 
@@ -43,7 +45,7 @@ public class LineChartWriter implements ItemWriter , StepExecutionListener {
         }
 
         final JFreeChart chart = ChartFactory.createXYLineChart(
-              file,
+              getChartName(),
               "X",
               "Y",
                dataset,
@@ -90,4 +92,11 @@ public class LineChartWriter implements ItemWriter , StepExecutionListener {
         return stepExecution.getExitStatus();
     }
 
+    public String getChartName() {
+        return chartName;
+    }
+
+    public void setChartName(String chartName) {
+        this.chartName = chartName;
+    }
 }
