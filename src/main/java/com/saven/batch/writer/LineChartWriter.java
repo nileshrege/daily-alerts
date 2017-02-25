@@ -43,7 +43,7 @@ public class LineChartWriter implements ItemWriter , StepExecutionListener {
         }
 
         final JFreeChart chart = ChartFactory.createXYLineChart(
-              "Line Chart Demo",
+              file,
               "X",
               "Y",
                dataset,

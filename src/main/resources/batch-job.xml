@@ -23,10 +23,10 @@
 
     <bean id="awsUploader" class="com.saven.batch.writer.AWSUploader">
         <property name="folderName" value="src/test/resources/output"/>
-        <property name="accessKey" value="AKIAIJY5DIJ75PRFQNWA"/>
-        <property name="secretKey" value="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"/>
-        <property name="bucketName" value="Elbin"/>
-        <property name="key" value="Performance@"/>
+        <property name="accessKey" value="AKIAJO46QTX4ZKTXYYLA"/>
+        <property name="secretKey" value="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"/>
+        <property name="bucketName" value="dailyalerts"/>
+        <property name="key" value=""/>
         <property name="upload" value="true"/>
     </bean>
 
@@ -40,7 +40,7 @@
     </bean>
 
     <bean id="writer" class="com.saven.batch.writer.LineChartWriter">
-        <property name="file" value="src/test/resources/output/LineGraph.jpeg"/>
+        <property name="file" value="src/test/resources/output/energy-consumption.png"/>
     </bean>
 
     <bean id="transactionManager"
